@@ -1,14 +1,18 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './Components/Home';
+import Landing from './Components/Landing';
 
 
 const App = () => {
   return (
     <div>
-      <h1>Hello, React App!</h1>
+      
+      
       {/* Your other components and content go here */}
-      <Home/>
+      <Landing/>
+      <Home />
+     
     </div>
   );
 };
