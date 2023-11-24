@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './Home.css'; // Import a CSS file for styling (create this file)
 
+
+
 function Home() {
     const [inputSequence, setInputSequence] = useState('');
     const [prediction, setPrediction] = useState([]);
@@ -68,8 +70,8 @@ function Home() {
             {prediction.length > 0 && (
                 <div className="prediction-container">
                     <h2>Prediction:</h2>
-                    <table>
-                        <thead>
+                    <table className="table table-bordered">
+                        <thead className="table-dark">
                             <tr>
                                 <th>Label</th>
                                 <th>Value</th>
@@ -84,6 +86,7 @@ function Home() {
                             ))}
                         </tbody>
                     </table>
+                    
                 </div>
             )}
         </div>

@@ -1,5 +1,4 @@
 import React from 'react'
-import CardCarousel from './CardCarousel'
 function Landing() {
     return (
         <div>
