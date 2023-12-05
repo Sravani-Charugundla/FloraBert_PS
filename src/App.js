@@ -2,16 +2,22 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './Authenticate/Login';
+import Signup from './Authenticate/Signup';
+import Home from './Components/Home';
+
 
 const App = () => {
   return (
     <div>
       <Router>
           <Routes>
+            <Route path="/Home" element ={</>}/>
 
           </Routes>
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/Signup" element={<Signup/>} />
+            <Route path="/Home" element={<Home/>}/>
           </Routes>
       </Router>
       

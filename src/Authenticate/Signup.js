@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import axios from "axios"
 import { useNavigate, Link } from "react-router-dom"
 import './Signup.css'
+import Login from "./Login"
 
 
 function Signup() {
@@ -44,11 +45,11 @@ function Signup() {
 
     return (
 
-        <div className="card-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <div className="card" style={{ maxWidth: '300px' }}>
+        <div className="card-containe" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <div className="carde">
                 <div className="Signup">
                     <h1>Signup</h1>
-                    <form action="POST" style={{ justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
+                    <form action="POST" style={{ justifyContent: 'center', alignItems: 'center', height: '60vh' }}>
                         <label htmlFor="UserId">EnterFirstName</label>
                         <input type="text" onChange={(e) => { setFirstName(e.target.value) }} placeholder="FirstName" />
                         <br />
@@ -67,6 +68,12 @@ function Signup() {
                         <input type="submit" className="btn btn-success" onClick={submit} value={"SignUp"} />
                         <p>{Error}</p>
                     </form>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <p>Already have an account? <Link to="/">Login</Link></p>
                     {/* <p>OR</p>
             <br />
            <Link to="/">Login Page</Link> */}

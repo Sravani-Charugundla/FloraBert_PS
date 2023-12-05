@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-import './Login.css';
+import './Login.css'
+import Signup from "./Signup";
+import GitLogin from "./GitLogin";
 
 function Login() {
   const history = useNavigate();
@@ -53,17 +55,17 @@ function Login() {
   
 
   return (
-    <div className="card-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div className="card-container">
       <button onClick={handleRedirect} style={{ position: 'absolute', top: '10px', right: '10px' }} className="btn btn-info">
             FLOWCHART
           </button>
-      <div className="card" style={{ maxWidth: '300px' }}>
+      <div className="card">
       
       
         <div className="login">
-        <h1>Login</h1>
-        
-          <form action="POST" style={{justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
+        <h1>LOGIN</h1>
+            
+          <form action="POST" style={{justifyContent: 'center', alignItems: 'center', height: '20vh' }}>
           
           <label htmlFor="UserId">Enter UserID</label>
             <input type="text" id = "UserId" onChange={(e) => setEmail(e.target.value)} placeholder="UserID" />
@@ -72,11 +74,21 @@ function Login() {
             <label htmlFor="password">Enter Password</label>
             <input type="password" id = "password" onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
             <br />
-            <br />
+            
             <input type="submit" className="btn btn-success" onClick={submit} value={"Login"}/>
             <p>{Error}</p>
           </form>
+          
           <br />
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          
+          <br/>
+          <p>Don't have an account? <Link to="/Signup">Sign Up</Link></p>
+          <GitLogin/>
+          
         </div>
       </div>
     </div>

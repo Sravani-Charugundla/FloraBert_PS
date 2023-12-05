@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './Home.css'; // Import a CSS file for styling (create this file)
 
-
-
 function Home() {
     const [inputSequence, setInputSequence] = useState('');
     const [prediction, setPrediction] = useState([]);
@@ -39,8 +37,23 @@ function Home() {
         predict();
     };
 
+    const logout = () => {
+        // Perform logout actions, such as clearing the access token from localStorage
+        localStorage.removeItem('accessToken');
+
+        // Redirect the user to the login page
+        window.location.href = '/';
+    };
+
     return (
         <div className="center-container">
+            <br/>
+            <br/>
+            <br/>
+            <div className="logout-container">
+                <button onClick={logout} className="btn btn-danger">Logout</button>
+            </div>
+
             <form onSubmit={handleSubmit} className="input-form">
                 <label htmlFor="sequence">Input Sequence:</label>
                 <input
@@ -50,21 +63,22 @@ function Home() {
                     value={inputSequence}
                     onChange={e => setInputSequence(e.target.value)}
                 />
-                 <button type="submit" className="btn btn-primary">
-                 {loading ? (
-                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                ) : (
-                    'Predict'
-                )}
-                 </button>
+                <button type="submit" className="btn btn-primary" disabled={loading}>
+                    {loading ? (
+                        <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    ) : (
+                        'Predict'
+                    )}
+                </button>
             </form>
 
             {loading && (
-            <div className="text-center">
-                <span className="spinner-border" role="status" aria-hidden="true"></span>
-                <p>Loading...</p>
-            </div>
-        )}
+                <div className="text-center">
+                    <span className="spinner-border" role="status" aria-hidden="true"></span>
+                    <p>Loading...</p>
+                </div>
+            )}
+            
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
             {prediction.length > 0 && (
@@ -86,7 +100,6 @@ function Home() {
                             ))}
                         </tbody>
                     </table>
-                    
                 </div>
             )}
         </div>
