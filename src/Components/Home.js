@@ -47,13 +47,6 @@ function Home() {
 
     return (
         <div className="center-container">
-            <br/>
-            <br/>
-            <br/>
-            <div className="logout-container">
-                <button onClick={logout} className="btn btn-danger">Logout</button>
-            </div>
-
             <form onSubmit={handleSubmit} className="input-form">
                 <label htmlFor="sequence">Input Sequence:</label>
                 <input
