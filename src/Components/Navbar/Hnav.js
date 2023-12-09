@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-
+import Profile from '../Profile';
 const HomeNav = () => {
     const location = useLocation();
 
@@ -30,8 +30,9 @@ const HomeNav = () => {
 
                         </ul>
                         <form className="d-flex" role="search">
+                            <Profile/>
+
                             <button type="button" className="btn btn-danger" onClick={logout}>LogOut</button>
-                            
                         </form>
                     </div>
                 </div>

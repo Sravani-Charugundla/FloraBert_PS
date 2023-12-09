@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Form, InputGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { auth} from './firebase'; // Update this import to the correct path
-
+import { db } from './firebase';
 function ForgotPassword() {
     const [show, setShow] = useState(false);
     const [email, setEmail] = useState('');
@@ -24,13 +24,18 @@ function ForgotPassword() {
 
     const handleResetPassword = async () => {
         try {
-            await auth.sendPasswordResetEmail(auth,email);
+            console.log(email);
+            await auth.sendPasswordResetEmail(db,email).then(data=>{
+                alert("Check you mail ID");
+            }).catch(err=>{
+                alert(err.code)
+            })
             setIsResetSent(true);
         } catch (error) {
-            // Handle errors (e.g., invalid email, user not found, etc.)
             console.error('Error sending reset password email:', error.message);
         }
     };
+    
 
     return (
         <div>
