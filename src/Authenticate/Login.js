@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, GithubAuthProvider } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GithubAuthProvider,GoogleAuthProvider } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import './Login.css';
 import { auth, db } from "./firebase";
 import { FaGoogle, FaGithub } from 'react-icons/fa'; // Import Google and GitHub icons
-
+import ForgotPassword from "./ForgotPassword";
 
 function Login() {
   const history = useNavigate();
@@ -26,10 +26,12 @@ function Login() {
       // Sign in with email and password
       const userCredential = await signInWithEmailAndPassword(authInstance, email, password);
       const userId = userCredential.user.uid;
-
-      // Fetch user details from Firestore based on email
+      console.log(userId);
+      console.log(email);
+      // Fetch user details from Fire store based on email
       const usersCollection = collection(db, "users");
-      const userQuery = query(usersCollection, where("email", "==", email));
+      const userQuery = query(usersCollection, where("mail", "==", email));
+      console.log(userQuery);
       const querySnapshot = await getDocs(userQuery);
 
       if (querySnapshot.empty) {
@@ -63,6 +65,7 @@ function Login() {
       const usersCollection = collection(db, "users");
       const userQuery = query(usersCollection, where("email", "==", user.email));
       const querySnapshot = await getDocs(userQuery);
+      console.log(querySnapshot);
 
       if (querySnapshot.empty) {
         // User doesn't exist, you can redirect to a sign-up page or handle it as needed
@@ -77,6 +80,8 @@ function Login() {
       setError("Google Sign-In failed. Please try again.");
     }
   };
+
+  
 
   const handleGitHubSignIn = async () => {
     const authInstance = getAuth();
@@ -161,6 +166,7 @@ function Login() {
           </div>
           
           <p>Don't have an account? <Link to="/Signup">Sign Up</Link></p>
+          <ForgotPassword/>
         </div>
       </div>
     </div>

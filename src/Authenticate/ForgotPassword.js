@@ -1,29 +1,79 @@
-import { sendPasswordResetEmail } from "firebase/auth";
-import React from "react";
-import { db } from "./firebase";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { Modal, Form, InputGroup, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { auth} from './firebase'; // Update this import to the correct path
 
-function ForgotPassword(){
-    const history = useNavigate();
+function ForgotPassword() {
+    const [show, setShow] = useState(false);
+    const [email, setEmail] = useState('');
+    const [isResetSent, setIsResetSent] = useState(false);
 
-    const handleSubmit = async(e)=>{
-        e.preventDefault()
-        const emalVal = e.target.email.value;
-        sendPasswordResetEmail(db,emalVal).then(data=>{
-            alert("Check your gmail")
-            history("/")
-        }).catch(err=>{
-            alert(err.code)
-        })
-    }
-    return(
-        <div className="App">
-            <h1>Forgot Password</h1>
-            <form onSubmit={(e)=>handleSubmit(e)}>
-                <input name="email" /><br/><br/>
-                <button>Reset</button>
-            </form>
+    const handleClose = () => {
+        setShow(false);
+        setIsResetSent(false);
+    };
+
+    const handleShow = () => {
+        setShow(true);
+        setIsResetSent(false);
+    };
+
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
+
+    const handleResetPassword = async () => {
+        try {
+            await auth.sendPasswordResetEmail(auth,email);
+            setIsResetSent(true);
+        } catch (error) {
+            // Handle errors (e.g., invalid email, user not found, etc.)
+            console.error('Error sending reset password email:', error.message);
+        }
+    };
+
+    return (
+        <div>
+            <Link to="#" onClick={handleShow}>
+                Forgot Password
+            </Link>
+
+            <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                    <Modal.Title>Forgot Password?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {!isResetSent ? (
+                        <>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text id="inputGroup-sizing-default">
+                                    Email
+                                </InputGroup.Text>
+                                <Form.Control
+                                    type="email"
+                                    aria-label="Default"
+                                    aria-describedby="inputGroup-sizing-default"
+                                    value={email}
+                                    onChange={handleEmailChange}
+                                />
+                            </InputGroup>
+                            <Button variant="primary" onClick={handleResetPassword}>
+                                Reset Password
+                            </Button>
+                        </>
+                    ) : (
+                        <p>Password reset email sent. Check your email for further instructions.</p>
+                    )}
+                </Modal.Body>
+                <Modal.Footer>
+                    {/* You can add a button to close the modal if needed */}
+                    {/* <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button> */}
+                </Modal.Footer>
+            </Modal>
         </div>
-    )
+    );
 }
+
 export default ForgotPassword;

@@ -8,6 +8,7 @@ import { getDocs, query, where } from "firebase/firestore";
 import { linkWithCredential } from "firebase/auth";
 import { GoogleAuthProvider, signInWithPopup, GithubAuthProvider } from "firebase/auth";
 import { FaGoogle, FaGithub } from 'react-icons/fa'; // Import Google and GitHub icons
+import SignUpGoogle from "./SignUpGoogle";
 
 
 
@@ -23,7 +24,7 @@ function Signup() {
         const firstName = e.target.Fname.value;
         const lastName = e.target.Lname.value;
         const mobileNo = e.target["Mno."].value;
-        const email = e.target.email.value;
+        const mail = e.target.email.value;
         const password = e.target.password.value;
 
         // Validate password length
@@ -31,7 +32,7 @@ function Signup() {
 
         try {
             // Create user in Firebase Authentication
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const userCredential = await createUserWithEmailAndPassword(auth, mail, password);
 
             // Access the user's unique ID from the userCredential
             const userId = userCredential.user.uid;
@@ -42,7 +43,7 @@ function Signup() {
                 firstName,
                 lastName,
                 mobileNo,
-                email,
+                mail,
             });
 
             console.log("User registered successfully");
@@ -109,57 +110,6 @@ function Signup() {
         }
     };
 
-
-    const handleGoogleSignup = async () => {
-        const provider = new GoogleAuthProvider();
-    
-        try {
-            // Sign up with Google
-            const userCredential = await signInWithPopup(auth, provider);
-            console.log("Full userCredential:", userCredential);
-            // Access the user's unique ID from the userCredential
-            const userId = userCredential.user.uid;
-            console.log(userCredential.user.email);
-    
-            // Access additional user details if available
-            const userDetails = {
-                userId,
-                displayName: userCredential.user.displayName || "",
-                email: userCredential.user.email || "",
-            };
-    
-            // Check if the user already exists in Firestore
-            const userRef = collection(db, "users");
-            const userSnapshot = await getDocs(query(userRef, where("userId", "==", userId)));
-    
-            if (userSnapshot.empty) {
-                // User doesn't exist, store user information in Firestore
-                await addDoc(userRef, userDetails);
-                console.log("User registered with Google successfully");
-            } else {
-                // User already exists, link the accounts if needed
-                const existingUserDoc = userSnapshot.docs[0];
-                const existingUserId = existingUserDoc.data().userId;
-    
-                if (existingUserId !== userId) {
-                    // You can choose to link accounts if needed
-                    console.log("User already exists. You may choose to link accounts.");
-                }
-            }
-    
-            // Redirect the user to another page after successful signup
-            history("/Home"); // Update the path as needed
-        } catch (error) {
-            console.error(error);
-            setError("Google Sign up failed. Please try again.");
-        }
-    };
-    
-
-
-
-
-
     return (
         <div className="card-containe" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <div className="carde">
@@ -184,12 +134,9 @@ function Signup() {
                         <br />
                         <button type="submit" className="btn btn-success">SignUp</button>
                         <p>{Error}</p>
-                        <div class="social-buttons">
-                            <button className="btn btn-danger rounded-circle p-2" onClick={handleGoogleSignup} style={{ marginRight: '10px' }}>
-                                <FaGoogle size={25} />
-                            </button>
-
-                            <button class="btn btn-dark rounded-circle p-2" onClick={handleGitHubSignup} style={{ marginLeft: '10px' }}>
+                        <div className="social-buttons">
+                            <SignUpGoogle/>
+                            <button className="btn btn-dark rounded-circle p-2" onClick={handleGitHubSignup} style={{ marginLeft: '10px' }}>
                             <FaGithub size={25} />
                             </button>
                         </div>

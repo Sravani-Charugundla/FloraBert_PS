@@ -7,12 +7,13 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA_mzqURfQh3qVzRgVrWqNY4tW2CpjapXU",
-  authDomain: "florabertauth.firebaseapp.com",
-  projectId: "florabertauth",
-  storageBucket: "florabertauth.appspot.com",
-  messagingSenderId: "269755777090",
-  appId: "1:269755777090:web:ea50961b1bb9e89059eddb"
+  apiKey: "AIzaSyDiN-RfPKBd_i2U5r71TJWK9U99s-LuFtw",
+  authDomain: "authenticatefbert.firebaseapp.com",
+  projectId: "authenticatefbert",
+  storageBucket: "authenticatefbert.appspot.com",
+  messagingSenderId: "353348803429",
+  appId: "1:353348803429:web:60f07eec13573d01435f8c",
+  measurementId: "G-XB0DLE0NBX"
 };
 
 // Initialize Firebase
@@ -20,3 +21,5 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase Authentication and get a reference to the service
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+

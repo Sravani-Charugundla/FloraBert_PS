@@ -31,6 +31,7 @@ const HomeNav = () => {
                         </ul>
                         <form className="d-flex" role="search">
                             <button type="button" className="btn btn-danger" onClick={logout}>LogOut</button>
+                            
                         </form>
                     </div>
                 </div>
