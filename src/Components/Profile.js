@@ -25,15 +25,14 @@ function Profile() {
           userDetails = {
             displayName: user.displayName,
             email: user.email,
-            // Add other GitHub user details you want to display
+            photoURL: user.photoURL, // Add GitHub photo URL
           };
         } else if (user.providerData && user.providerData[0].providerId === 'google.com') {
           // Google sign-in
-          console.log(user.photoURL);
           userDetails = {
             displayName: user.displayName,
             email: user.email,
-            // Add other Google user details you want to display
+            photoURL: user.photoURL, // Add Google photo URL
           };
         } else {
           // Email/password sign-in, fetch details from Firestore
@@ -68,10 +67,11 @@ function Profile() {
         <Modal.Body>
           {userDetails ? (
             <>
-              <img src = {userDetails.photoURL}/>
+              {userDetails.photoURL && (
+                <img src={userDetails.photoURL} alt="User Profile" style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+              )}
               <p>Display Name: {userDetails.displayName}</p>
               <p>Email: {userDetails.email}</p>
-              
               {/* Add other user details based on the sign-in method */}
             </>
           ) : (

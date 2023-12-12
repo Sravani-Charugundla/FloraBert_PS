@@ -3,6 +3,7 @@ import { Modal, Form, InputGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { auth} from './firebase'; // Update this import to the correct path
 import { db } from './firebase';
+import { sendPasswordResetEmail } from 'firebase/auth';
 function ForgotPassword() {
     const [show, setShow] = useState(false);
     const [email, setEmail] = useState('');
@@ -25,11 +26,7 @@ function ForgotPassword() {
     const handleResetPassword = async () => {
         try {
             console.log(email);
-            await auth.sendPasswordResetEmail(db,email).then(data=>{
-                alert("Check you mail ID");
-            }).catch(err=>{
-                alert(err.code)
-            })
+            await sendPasswordResetEmail(auth,email);
             setIsResetSent(true);
         } catch (error) {
             console.error('Error sending reset password email:', error.message);
